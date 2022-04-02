@@ -35,7 +35,7 @@ watch(regStr, (val) => {
       >
       /g
     </div>
-    <div flex="~" item-center justify-center>
+    <div flex="~" items-center justify-center>
       <div v-if="!isCheck" i-mdi-checkbox-blank-circle-outline mr-2 />
       <div v-else i-mdi-checkbox-marked-circle-outline mr-2 />
       <div>{{ test }}</div>
