@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 const __DEV__ = import.meta.env.DEV
 
 const regStr = ref('')
@@ -17,7 +18,6 @@ watch(regStr, (val) => {
     isCheck.value = false
   }
 })
-
 </script>
 
 <template>

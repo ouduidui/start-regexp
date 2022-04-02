@@ -6,4 +6,5 @@
     </main>
     <Footer />
   </div>
+  <toast />
 </template>
