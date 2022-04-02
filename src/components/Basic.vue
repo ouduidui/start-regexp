@@ -8,19 +8,39 @@ const regStr = ref('')
 
 const isCheck = reactive<boolean[]>(Array(curTopic.value.testCase.length).fill(false))
 
+const generateRegExp = (val: string): RegExp | false => {
+  try {
+    const reg = new RegExp(val, 'g')
+    return reg
+  }
+  catch (e) {
+    return false
+  }
+}
+
+const resetIsCheck = () => {
+  for (let i = 0; i < isCheck.length; i++)
+    isCheck[i] = false
+}
+
 watch(regStr, (val) => {
   if (val) {
-    const reg = new RegExp(val, 'g')
-    const testCase = curTopic.value.testCase
-    for (let i = 0; i < isCheck.length; i++)
-      isCheck[i] = reg.test(testCase[i])
+    const reg: RegExp | false = generateRegExp(val)
 
-    // eslint-disable-next-line no-console
-    __DEV__ && console.log(reg)
+    if (reg) {
+      const testCase = curTopic.value.testCase
+      for (let i = 0; i < isCheck.length; i++)
+        isCheck[i] = reg.test(testCase[i])
+
+      // eslint-disable-next-line no-console
+      __DEV__ && console.log(reg)
+    }
+    else {
+      resetIsCheck()
+    }
   }
   else {
-    for (let i = 0; i < isCheck.length; i++)
-      isCheck[i] = false
+    resetIsCheck()
   }
 })
 
