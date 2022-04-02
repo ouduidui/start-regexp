@@ -22,7 +22,7 @@ import { isDark, toggleDark } from '~/composables/dark'
       class="icon-btn"
       i-carbon-logo-github
       rel="noreferrer"
-      href="https://github.com/ouduidui"
+      href="https://github.com/ouduidui/start-regexp"
       target="_blank"
       title="GitHub"
     />

@@ -1,6 +1,6 @@
 import { reactive, ref } from 'vue'
 
-interface ToastOptions {
+export interface ToastOptions {
   title: string
   content: string
   buttonText: string

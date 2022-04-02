@@ -5,7 +5,7 @@ import { hideToast, isShowToast, toastInfo } from '~/composables/toastHandler'
 <template>
   <Teleport v-if="isShowToast" to="body">
     <!-- mask -->
-    <div fixed inset-0 class="bg-gray-100/80 dark:bg-gray-900/80" />
+    <div fixed inset-0 class="bg-gray-100/90 dark:bg-gray-900/90" />
 
     <!-- content -->
     <div

@@ -1,27 +1,42 @@
 <script setup lang="ts">
+import { curTopic } from '~/composables/topics'
+import { showToast } from '~/composables/toastHandler'
 
 const __DEV__ = import.meta.env.DEV
 
 const regStr = ref('')
 
-const isCheck = ref(false)
-const test = 'HelloWorld'
+const isCheck = reactive<boolean[]>(Array(curTopic.value.testCase.length).fill(false))
 
 watch(regStr, (val) => {
   if (val) {
     const reg = new RegExp(val, 'g')
-    isCheck.value = reg.test(test)
+    const testCase = curTopic.value.testCase
+    for (let i = 0; i < isCheck.length; i++)
+      isCheck[i] = reg.test(testCase[i])
+
     // eslint-disable-next-line no-console
     __DEV__ && console.log(reg)
   }
   else {
-    isCheck.value = false
+    for (let i = 0; i < isCheck.length; i++)
+      isCheck[i] = false
   }
 })
+
+const openAnswer = () => {
+  const solveTips = curTopic.value.solveTips
+  showToast({ ...solveTips })
+}
 </script>
 
 <template>
-  <div text="xl center gray-500 dark:gray-100" font="mono">
+  <div
+    text="xl center gray-500 dark:gray-100"
+    p="x-10"
+    font="mono"
+  >
+    <!-- Input -->
     <div pt-10 pb-5>
       /
       <input
@@ -35,10 +50,74 @@ watch(regStr, (val) => {
       >
       /g
     </div>
-    <div flex="~" items-center justify-center>
-      <div v-if="!isCheck" i-mdi-checkbox-blank-circle-outline mr-2 />
-      <div v-else i-mdi-checkbox-marked-circle-outline mr-2 />
-      <div>{{ test }}</div>
+
+    <!-- Description -->
+    <div mb-20>
+      <div
+        text-2xl
+        pb-2
+        mb-5
+        border-b="1 gray-500/30 dark:gray-100/30"
+      >
+        Description
+      </div>
+      <div>
+        {{ curTopic.description }}
+      </div>
+    </div>
+
+    <!-- Test Case -->
+    <div>
+      <div
+        text-2xl
+        pb-2
+        mb-5
+        border-b="1 gray-500/30 dark:gray-100/30"
+        flex
+        items-end
+        justify-center
+      >
+        <div>Test Case</div>
+        <div
+          flex
+          items-center
+          justify-center
+          cursor-pointer
+          text="base gray-500/50 hove:gray-500 dark:gray-100/50 dark:hover:gray-100"
+          @click="openAnswer"
+        >
+          <div
+            ml-5
+            mr-1
+            i-mdi-code-json
+          />
+          <div>ans</div>
+        </div>
+      </div>
+
+      <div
+        v-for="(item, idx) in curTopic.testCase" :key="idx"
+        flex
+        items-center
+        justify-center
+        pb-3
+      >
+        <div
+          v-if="!isCheck[idx]"
+          text="red-500"
+          mr-5
+          i-mdi-alpha-x-circle-outline
+        />
+        <div
+          v-else
+          text="green-500"
+          mr-5
+          i-mdi-checkbox-marked-circle-outline
+        />
+        <div>
+          {{ item }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
