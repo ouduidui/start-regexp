@@ -21,6 +21,17 @@ export const topics: Topic[] = [
       buttonText: 'Close',
     },
   },
+  {
+    id: 2,
+    description: 'Use \'.\' to match any character. For example, \'.\' matches any character, \'.\' matches \'a\', \'.\' matches \'b\', \'.\' matches \'c\', etc.',
+    testCase: ['a', 'B', 'c', '1', '\u2228'],
+    answer: /./g,
+    solveTips: {
+      title: 'Tips',
+      content: '/./g',
+      buttonText: 'Close',
+    },
+  },
 ]
 
 export const curTopicIdx = ref(1)
