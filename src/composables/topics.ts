@@ -1,6 +1,8 @@
 import { computed, ref } from 'vue'
 import type { ToastOptions } from './toastHandler'
 
+const ROUTE_TOPIC_KEY = 'topic'
+
 interface Topic {
   id: number
   description: string
@@ -34,7 +36,10 @@ export const topics: Topic[] = [
   },
 ]
 
-export const curTopicIdx = ref(1)
+const { search, origin, pathname } = location
+const localCurTopicIdx = new URLSearchParams(search).get(ROUTE_TOPIC_KEY)
+
+export const curTopicIdx = ref(localCurTopicIdx ? parseInt(localCurTopicIdx) <= topics.length ? parseInt(localCurTopicIdx) : 1 : 1)
 
 export const curTopic = computed<Topic>(() => topics[curTopicIdx.value - 1])
 
@@ -47,4 +52,6 @@ export const changeTopic = (topic: number) => {
     curTopicIdx.value = 1
   else
     curTopicIdx.value = topic
+
+  location.href = `${origin}${pathname}?${ROUTE_TOPIC_KEY}=${curTopicIdx.value}`
 }
