@@ -1,38 +1,19 @@
 <script setup lang="ts">
 import type { Topic } from '~/composables/topics'
 import { showToast } from '~/composables/toastHandler'
+import { generateIsCheckArray } from '~/composables/regexp'
 
 const props = defineProps<{
   curTopic: Topic
 }>()
 
-const __DEV__ = import.meta.env.DEV
-
 const regStr = ref('')
 
-const generateRegExp = (val: string): RegExp | false => {
-  try {
-    const reg = new RegExp(val)
-    return reg
-  }
-  catch (e) {
-    return false
-  }
-}
-
 const isCheck = computed<boolean[]>(() => {
-  const reg: RegExp | false = generateRegExp(regStr.value)
-  const testCase = props.curTopic.testCase
-  if (regStr.value !== '' && reg)
-    return testCase.map(str => reg.test(str))
-
-  else return Array(props.curTopic.testCase.length).fill(false)
+  return generateIsCheckArray(regStr.value, props.curTopic.testCase)
 })
 
-const openAnswer = () => {
-  const solveTips = props.curTopic.solveTips
-  showToast({ ...solveTips })
-}
+const openAnswer = () => showToast({ ...props.curTopic.solveTips })
 </script>
 
 <template>
