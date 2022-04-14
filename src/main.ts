@@ -10,15 +10,15 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: import('~/pages/home.vue'),
+      component: () => import('~/pages/home.vue'),
     },
     {
       path: '/more',
-      component: import('~/pages/links.vue'),
+      component: () => import('~/pages/links.vue'),
     },
     {
       path: '/:id',
-      component: import('~/pages/regExp.vue'),
+      component: () => import('~/pages/regExp.vue'),
     },
   ],
   history: createWebHistory(),
