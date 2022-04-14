@@ -1,21 +1,18 @@
 <script setup lang="ts">
-import { curTopic } from '~/composables/topics'
+import type { Topic } from '~/composables/topics'
 import { showToast } from '~/composables/toastHandler'
+
+const props = defineProps<{
+  curTopic: Topic
+}>()
 
 const __DEV__ = import.meta.env.DEV
 
 const regStr = ref('')
 
-const isCheck = ref<boolean[]>(Array(curTopic.value.testCase.length).fill(false))
-
-watch(curTopic, () => {
-  isCheck.value = Array(curTopic.value.testCase.length).fill(false)
-  regStr.value = ''
-})
-
 const generateRegExp = (val: string): RegExp | false => {
   try {
-    const reg = new RegExp(val, 'g')
+    const reg = new RegExp(val)
     return reg
   }
   catch (e) {
@@ -23,34 +20,17 @@ const generateRegExp = (val: string): RegExp | false => {
   }
 }
 
-const resetIsCheck = () => {
-  for (let i = 0; i < isCheck.value.length; i++)
-    isCheck.value[i] = false
-}
+const isCheck = computed<boolean[]>(() => {
+  const reg: RegExp | false = generateRegExp(regStr.value)
+  const testCase = props.curTopic.testCase
+  if (regStr.value !== '' && reg)
+    return testCase.map(str => reg.test(str))
 
-watch(regStr, (val) => {
-  if (val) {
-    const reg: RegExp | false = generateRegExp(val)
-
-    if (reg) {
-      const testCase = curTopic.value.testCase
-      for (let i = 0; i < isCheck.value.length; i++) {
-        isCheck.value[i] = reg.test(testCase[i])
-        // eslint-disable-next-line no-console
-        __DEV__ && console.log(reg, testCase[i], reg.test(testCase[i]))
-      }
-    }
-    else {
-      resetIsCheck()
-    }
-  }
-  else {
-    resetIsCheck()
-  }
+  else return Array(props.curTopic.testCase.length).fill(false)
 })
 
 const openAnswer = () => {
-  const solveTips = curTopic.value.solveTips
+  const solveTips = props.curTopic.solveTips
   showToast({ ...solveTips })
 }
 </script>
@@ -73,7 +53,7 @@ const openAnswer = () => {
         p="x-4 y-1"
         text="center"
       >
-      /g
+      /
     </div>
 
     <!-- Description -->

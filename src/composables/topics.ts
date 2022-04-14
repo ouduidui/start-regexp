@@ -1,7 +1,6 @@
-import { computed, ref } from 'vue'
 import type { ToastOptions } from './toastHandler'
 
-interface Topic {
+export interface Topic {
   id: number
   description: string
   testCase: string[]
@@ -34,8 +33,6 @@ export const topics: Topic[] = [
   },
 ]
 
-export const curTopicIdx = ref(1)
-
-export const curTopic = computed<Topic>(() => topics[curTopicIdx.value - 1])
-
 export const topicCount = topics.length
+
+export const limitTopicIdx = (idx: number): number => idx > topicCount ? topicCount : idx < 1 ? 1 : idx
