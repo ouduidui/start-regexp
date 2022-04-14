@@ -1,3 +1,14 @@
+<script setup lang="ts">
+const router = useRouter()
+const startHandle = () => {
+  router.push('/1')
+}
+
+const moreLinkHandle = () => {
+  router.push('/more')
+}
+</script>
+
 <template>
   <div
     flex="~ col"
@@ -28,6 +39,7 @@
       p="y-2"
       border="2 gray-500 dark:gray-100"
       opacity="80 hover:100"
+      @click="startHandle"
     >
       Start
     </button>
@@ -38,6 +50,7 @@
       p="y-2"
       opacity="80 hover:100"
       border="2 gray-500 dark:gray-100"
+      @click="moreLinkHandle"
     >
       More Link
     </button>
