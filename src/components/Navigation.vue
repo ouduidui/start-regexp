@@ -1,5 +1,17 @@
 <script setup lang="ts">
-import { changeTopic, curTopicIdx, topicCount } from '~/composables/topics'
+import { curTopicIdx, topicCount } from '~/composables/topics'
+
+const router = useRouter()
+
+const changeTopic = (topic: number) => {
+  topic = topic > topicCount ? topicCount : topic < 1 ? 1 : topic
+  router.push(`/${topic}`)
+  curTopicIdx.value = topic
+}
+
+const routes = useRoute()
+const curIdx = routes.params.id || 1
+changeTopic(curIdx)
 </script>
 
 <template>
