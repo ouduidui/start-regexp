@@ -16,6 +16,10 @@ const links = [
     title: 'ReX',
     url: 'https://rex.antfu.me/',
   },
+  {
+    title: 'RegExr',
+    url: 'https://regexr.com/',
+  },
 ]
 </script>
 
