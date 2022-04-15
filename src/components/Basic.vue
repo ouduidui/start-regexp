@@ -2,14 +2,16 @@
 import type { Topic } from '~/composables/topics'
 import { showToast } from '~/composables/toastHandler'
 import { generateIsCheckArray } from '~/composables/regexp'
+import { getHistory, setHistory } from '~/composables/store'
 
 const props = defineProps<{
   curTopic: Topic
 }>()
 
-const regStr = ref('')
+const regStr = ref(getHistory(props.curTopic.id) || '')
 
 const isCheck = computed<boolean[]>(() => {
+  setHistory(props.curTopic.id, regStr.value)
   return generateIsCheckArray(regStr.value, props.curTopic.testCase)
 })
 
