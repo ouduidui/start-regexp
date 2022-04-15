@@ -1,7 +1,6 @@
 export const generateRegExp = (val: string): RegExp | false => {
   try {
-    const reg = new RegExp(val)
-    return reg
+    return new RegExp(val)
   }
   catch (e) {
     return false
