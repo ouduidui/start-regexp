@@ -1,7 +1,7 @@
 import type { ToastOptions } from './toastHandler'
 
 export interface Topic {
-  id: number
+  id: string
   description: string
   testCase: string[]
   answer: RegExp
@@ -11,26 +11,26 @@ export interface Topic {
 
 export const topics: Topic[] = [
   {
-    id: 1,
+    id: 'hello-world',
     description: 'Hello, welcome to start-regexp! This is a first regexp test that need your regexp answer to match "HelloWorld". Let\'s start!',
     testCase: ['HelloWorld'],
-    answer: /HelloWorld/g,
+    answer: /HelloWorld/,
     answerStr: 'HelloWorld',
     solveTips: {
       title: 'Tips',
-      content: '/HelloWorld/g',
+      content: '/HelloWorld/',
       buttonText: 'Close',
     },
   },
   {
-    id: 2,
-    description: 'Use \'.\' to match any character. For example, \'.\' matches any character, \'.\' matches \'a\', \'.\' matches \'b\', \'.\' matches \'c\', etc.',
-    testCase: ['a', 'B', 'c', '1', '\u2228'],
-    answer: /./g,
-    answerStr: '.',
+    id: 'any-single-character',
+    description: 'Use \'.\' to matches any single character except line terminators: \\n, \\r, \\u2028 or \\u2029. For example, /.y/ matches "my" and "ay", but not "yes", in "yes make my day".',
+    testCase: ['ab', 'ac', 'ad', 'ae'],
+    answer: /./,
+    answerStr: 'a.',
     solveTips: {
       title: 'Tips',
-      content: '/./g',
+      content: '/a./',
       buttonText: 'Close',
     },
   },
